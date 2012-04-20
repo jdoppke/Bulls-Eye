@@ -1,0 +1,44 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title></title>
+
+    <meta name="description" content="">
+    <script src="init.js"></script>
+
+    <style>
+        #stage {
+            display: block;
+            width: 800px;
+            height: 450px;
+            outline: 1px solid #333;
+            position: relative;
+            cursor: crosshair;
+        }
+
+        canvas {
+            outline: 1px solid red;
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair;
+        }
+
+        #canvas {
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div id="stage">
+    <canvas id="canvas" width="800" height="450"></canvas>
+</div>
+<script type="text/javascript">
+    TS.init();
+</script>
+</body>
+</html>
