@@ -8,6 +8,10 @@ var RAD = Math.PI/180;
 
 var ANIM_LIMIT = 500;
 
+var $ = function(id) {
+	return document.getElementById(id);
+};
+
 var randomRange = function(min, max) {
 	return ((Math.random()*(max-min)) + min); 
 };

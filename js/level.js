@@ -1,5 +1,8 @@
 var Level_one = {
 
+	ammoCount: 8,
+	targetCount: 4,
+
     init: function() {
     
         var bottle = new Target('bottle1');
@@ -52,8 +55,16 @@ var Level_one = {
 
 var Level = {
 
+	ammoCount: 0,
+	ammoLeft: 0,
+	targetCount: 0,
+	shotsFired: 0,
+
     load: function(level) {
     
+    	Level.ammoCount   = 8;
+    	Level.ammoLeft    = 8;
+    	Level.targetCount = 4;
         Level_one.init();
     
     }

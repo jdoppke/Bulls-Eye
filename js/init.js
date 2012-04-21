@@ -18,6 +18,7 @@ var TS = {
         TS.stage.addEventListener('click', TS.fireShot, false);
 
         Level.load('Level_one');
+        Status.init();
 
     },
 
@@ -27,10 +28,14 @@ var TS = {
         var clicky = e.pageY - TS.offsetY;
         var key;
 
+		Level.shotsFired++;
+		Level.ammoLeft--;
+
         for (key in TS.targetLocal) {
 
             var target = TS.targetLocal[key];
 
+			/*
             var str = '';
             str += 'left: ' + target.borderLeft;
             str += ' right: ' + target.borderRight;
@@ -39,7 +44,7 @@ var TS = {
 
             console.log(str);
             console.log('clicked: ' + clickx + ', ' + clicky);
-
+*/
             if (clickx > target.borderLeft  &&
                 clickx < target.borderRight &&
                 clicky > target.borderTop   &&
@@ -48,11 +53,25 @@ var TS = {
                 console.log('hit');
                 target.destroy(clickx, clicky);
 
-                return;
+				Level.targetCount--;
+
             }
         }
 
-        console.log('miss');
+		if (Level.targetCount === 0) {
+			console.log('Great job, you win!');
+			// Go to next level
+		}
+		
+		if (Level.ammoLeft === 0 && Level.targetCount > 0) {
+			console.log('Sorry, you lost');
+			// Reset level call here
+		}
+
+		console.log('Ammo: ' + Level.ammoLeft + '/' + Level.ammoCount);
+		console.log('Targets Left: ' + Level.targetCount);
+		
+		Status.setStatus();
 
     }
 
