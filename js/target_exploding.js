@@ -46,7 +46,9 @@ var Target = function(name) {
         self.borderTop = param.posy;
         self.borderBottom = param.posy + param.height;
 
+		console.log(TS.targetLocal);
         TS.targetLocal[self.name] = self;
+        //console.log(self);
 
         self.tileWidth = param.tileW;
         self.tileHeight = param.tileH;
@@ -167,7 +169,7 @@ var Target = function(name) {
         } else {
             
             // Remove reference canvas
-            TS.stage.removeChild(document.getElementById(self.referenceCopy.id));
+            TS.stage.removeChild($(self.referenceCopy.id));
             
             // Delete target
             delete TS.targetLocal[self.name];

@@ -61,11 +61,26 @@ var Level = {
 	shotsFired: 0,
 
     load: function(level) {
-    
+
+		for (var key in TS.targetLocal) {
+				
+			console.log('sdfs' + key);
+			// Stop animation, delete ref and actual obj
+			var target = TS.targetLocal[key];
+			
+			console.log(target.af);
+			cancelRequestAnimFrame(target.af);
+			TS.stage.removeChild($(target.referenceCopy.id));
+        	delete TS.targetLocal[target.name];
+			
+		}
+		TS.targetLocal = {};
+
     	Level.ammoCount   = 8;
     	Level.ammoLeft    = 8;
     	Level.targetCount = 4;
         Level_one.init();
+        Status.init();
     
     }
 

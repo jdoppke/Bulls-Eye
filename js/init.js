@@ -18,7 +18,6 @@ var TS = {
         TS.stage.addEventListener('click', TS.fireShot, false);
 
         Level.load('Level_one');
-        Status.init();
 
     },
 
@@ -61,6 +60,9 @@ var TS = {
 		if (Level.targetCount === 0) {
 			console.log('Great job, you win!');
 			// Go to next level
+			// Restart level 1 for now...
+			Level.load('Level_one');
+			return;
 		}
 		
 		if (Level.ammoLeft === 0 && Level.targetCount > 0) {
