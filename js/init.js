@@ -17,44 +17,7 @@ var TS = {
 
         TS.stage.addEventListener('click', TS.fireShot, false);
 
-        var bottle = new Target('bottle');
-        bottle.create({
-            posx: 400,
-            posy: 200,
-            width: 40,
-            height: 150,
-            imageSrc: 'images/bottle.png'
-        });
-
-        var bottle = new Target('bottle2');
-        bottle.create({
-            posx: 300,
-            posy: 200,
-            width: 40,
-            height: 150,
-            imageSrc: 'images/bottle.png'
-        });
-        
-        var bottle = new Target('bottle3');
-        bottle.create({
-            posx: 200,
-            posy: 200,
-            width: 40,
-            height: 150,
-            imageSrc: 'images/bottle.png'
-        });
-        
-        var bottle = new Target('bottle4');
-        bottle.create({
-            posx: 100,
-            posy: 200,
-            width: 40,
-            height: 150,
-            imageSrc: 'images/bottle.png'
-        });
-
-//        var circle = new Target('circle');
-//        circle.create(200, 200, 20, 20);
+        Level.load('Level_one');
 
     },
 
@@ -72,9 +35,10 @@ var TS = {
             str += 'left: ' + target.borderLeft;
             str += ' right: ' + target.borderRight;
             str += ' top: ' + target.borderTop;
-            str += ' bottom: ' + target.borderBottem;
+            str += ' bottom: ' + target.borderBottom;
 
             console.log(str);
+            console.log('clicked: ' + clickx + ', ' + clicky);
 
             if (clickx > target.borderLeft  &&
                 clickx < target.borderRight &&
@@ -88,7 +52,7 @@ var TS = {
             }
         }
 
-    console.log('miss');
+        console.log('miss');
 
     }
 

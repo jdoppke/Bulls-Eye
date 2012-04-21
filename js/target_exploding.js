@@ -20,13 +20,11 @@ var Target = function(name) {
     self.create = function(param) {
 
 		var sounds = [
-			'http://www.allmusiclibrary.com/free_sound_effects/glass_breaking_2.mp3',
-			'http://www.allmusiclibrary.com/free_sound_effects/glass_breaking_1.mp3'
+            'sounds/glass_breaking_2.mp3',
+			'sounds/glass_breaking_1.mp3'
 		];
 		
 		var randomSound = Math.round(randomRange(0,1));
-
-		console.log(randomSound);
 
 		self.sound = new Audio(sounds[randomSound]);
 		self.sound.load();
@@ -37,8 +35,6 @@ var Target = function(name) {
         img.onload = function() {
             TS.context.drawImage(img, param.posx, param.posy);
         };
-
-//        TS.context.drawImage(self.img, param.posx, param.posy, param.width, param.height);
 
         self.posx = param.posx;
         self.posy = param.posy;
@@ -52,10 +48,14 @@ var Target = function(name) {
 
         TS.targetLocal[self.name] = self;
 
-        // TODO: Figure out formula for these numbers.
-        self.tileWidth = 10;
-        self.tileHeight = 10;
+        self.tileWidth = param.tileW;
+        self.tileHeight = param.tileH;
 
+        // Assign random numbers for tile slices
+        var sliceW = Math.floor(param.width / 10);
+        var sliceH = Math.floor(param.height / 10);
+        self.sliceRange = [sliceW, sliceH].sort(numeric);
+        
         var horzSliceCount = self.width / self.tileWidth;
         var vertSliceCount = self.height / self.tileHeight;
         var totalTiles = horzSliceCount * vertSliceCount;
@@ -75,12 +75,9 @@ var Target = function(name) {
         self.referenceCopy.id = self.name + '_ref';
         self.referenceCopy.width = 800;
         self.referenceCopy.height = 450;
-        self.referenceCopy.style.left = '800px';
+        self.referenceCopy.style.top = '450px';
         TS.stage.appendChild(self.referenceCopy);
         self.refContext = document.getElementById(self.name + '_ref').getContext('2d');
-
-        var tileX = 0;
-        var tileY = 0;
 
         self.createTiles();
 
@@ -98,8 +95,8 @@ var Target = function(name) {
                 tile.posy = self.posy + (counter_y * self.tileHeight);
                 tile.originalx = tile.posx;
                 tile.originaly = tile.posy;
-                tile.width = 10;
-                tile.height = 10;
+                tile.width = Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
+                tile.height = Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
                 self.tiles.push(tile);
                 x += self.tileWidth;
                 counter_x++;
@@ -149,7 +146,6 @@ var Target = function(name) {
 		self.animate();
 
         TS.context.clearRect(self.posx, self.posy, self.width, self.height);
-        console.log(TS.targetLocal);
 
     };
 
@@ -159,20 +155,24 @@ var Target = function(name) {
 
         for (var i=0; i<self.tiles.length; i++) {
             var tile = self.tiles[i];
-            
             tile.render(self.copyContext, self.referenceCopy);
             tile.update();
         }
         
         if (self.animateCycle < 100) {
-            console.log('cycle' + self.name);
+            //console.log('cycle' + self.name);
             //setTimeout(function(){
                 self.af = requestAnimFrame(self.animate);
-            //}, 100);
+            //}, 30);
         } else {
-            console.log('stopped');
+            
+            // Remove reference canvas
+            TS.stage.removeChild(document.getElementById(self.referenceCopy.id));
+            
+            // Delete target
             delete TS.targetLocal[self.name];
-            console.log('target destroyed');
+            
+            // Cancel RAF for this objects animation
             cancelRequestAnimFrame(self.af);
         }
         self.animateCycle++;

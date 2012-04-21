@@ -12,6 +12,10 @@ var randomRange = function(min, max) {
 	return ((Math.random()*(max-min)) + min); 
 };
 
+var numeric = function(a, b) {
+    return (a - b);
+};
+
 window.requestAnimFrame = (function(callback){
     return (
         window.requestAnimationFrame       ||

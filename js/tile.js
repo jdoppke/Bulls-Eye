@@ -1,15 +1,18 @@
 var Tile = function() {
 
-    this.velX = randomRange(-50,50);
-    this.velY = randomRange(-50,50);
+    this.velX = randomRange(-30,30);
+    this.velY = randomRange(-30,30);
 
     this.drag = .95;
 
     this.gravity = 2;
 
     this.spin = .1;
-    this.rotation = 0.5-Math.random();;
+    this.rotation = 0;
+    this.rotateAmount = .036;
 
+    this.tranX = this.tranY = 0;
+    
     this.update = function() {
         this.velX *= this.drag;
         this.velY *= this.drag;
@@ -19,15 +22,18 @@ var Tile = function() {
         this.posx += this.velX;
         this.posy += this.velY;
 
-        this.rotation %= 360;
+        this.rotation += this.rotateAmount;
 
     };
 
     this.render = function(canvas, refCanvas) {
-        //canvas.save();
-        //canvas.translate(this.velX, this.velY);
-        //canvas.rotate(this.rotation*RAD);
-        self = this;
+
+        var self = this;
+    
+        canvas.save();
+        //canvas.translate(this.posx, this.posy);
+        //canvas.rotate(this.rotation);
+        //console.log(this.rotation);
         canvas.drawImage(
                 refCanvas,
                 self.originalx,
@@ -39,7 +45,7 @@ var Tile = function() {
                 self.width,
                 self.height
             );
-        //canvas.restore();
+        canvas.restore();
     };
 
 };
