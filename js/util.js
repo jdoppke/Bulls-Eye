@@ -1,12 +1,9 @@
 /*
-
 Global helpers that are used throughout.
-
 */
 
 var RAD = Math.PI/180;
-
-var ANIM_LIMIT = 500;
+var ANIM_LIMIT = 100;
 
 var $ = function(id) {
 	return document.getElementById(id);
@@ -33,7 +30,7 @@ window.requestAnimFrame = (function(callback){
     );
 })();
 
-window.cancelRequestAnimFrame = ( function() {
+window.cancelRequestAnimFrame = (function() {
     return (
         window.cancelAnimationFrame              ||
         window.webkitCancelRequestAnimationFrame ||
@@ -43,3 +40,40 @@ window.cancelRequestAnimFrame = ( function() {
         clearTimeout
     );
 })();
+
+var GAMELOOP = function() {
+
+	// Loop through targets to to update if needed.
+	for (var key in TS.targetLocal) {
+	
+		var target = TS.targetLocal[key];
+
+		// If the target is hit, update
+		if (target.hit) {
+
+			target.copyContext.clearRect(0,0,800, 450);
+
+			// Update each tile
+        	for (var i=0; i<target.tiles.length; i++) {
+            	var tile = target.tiles[i];
+            	tile.render(target.copyContext, target.referenceCopy);
+            	tile.update();
+        	}
+
+			if (target.animCount > ANIM_LIMIT) {
+				 // Remove reference canvas
+            	TS.stage.removeChild($(target.referenceCopy.id));
+
+	            // Delete target
+    	        delete TS.targetLocal[target.name];
+			}
+
+			target.animCount++;
+
+		}
+
+	}
+
+	requestAnimFrame(GAMELOOP);
+
+};

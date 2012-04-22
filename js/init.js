@@ -17,7 +17,9 @@ var TS = {
 
         TS.stage.addEventListener('click', TS.fireShot, false);
 
-        Level.load('Level_one');
+        Level.load('one');
+        
+        GAMELOOP();
 
     },
 
@@ -26,6 +28,10 @@ var TS = {
         var clickx = e.pageX - TS.offsetX;
         var clicky = e.pageY - TS.offsetY;
         var key;
+
+		console.log('e.pageX = ' + e.pageX + ' e.pageY = ' + e.pageY);
+		console.log('TS.offsetX = ' + TS.offsetX + ' TS.offsetY = ' + TS.offsetY);
+		console.log('fired at: ' + clickx + ', ' + clicky);
 
 		Level.shotsFired++;
 		Level.ammoLeft--;
@@ -44,14 +50,18 @@ var TS = {
             console.log(str);
             console.log('clicked: ' + clickx + ', ' + clicky);
 */
-            if (clickx > target.borderLeft  &&
-                clickx < target.borderRight &&
-                clicky > target.borderTop   &&
-                clicky < target.borderBottom) {
+			// If the click was within the target and
+			// if the target wasn't already hit
+            if (
+            	clickx > target.borderLeft   &&
+                clickx < target.borderRight  &&
+                clicky > target.borderTop    &&
+                clicky < target.borderBottom &&
+            	!target.hit
+            	) {
 
-                console.log('hit');
+                //console.log('hit');
                 target.destroy(clickx, clicky);
-
 				Level.targetCount--;
 
             }
@@ -60,8 +70,7 @@ var TS = {
 		if (Level.targetCount === 0) {
 			console.log('Great job, you win!');
 			// Go to next level
-			// Restart level 1 for now...
-			Level.load('Level_one');
+			Status.setStatus();
 			return;
 		}
 		
@@ -70,8 +79,8 @@ var TS = {
 			// Reset level call here
 		}
 
-		console.log('Ammo: ' + Level.ammoLeft + '/' + Level.ammoCount);
-		console.log('Targets Left: ' + Level.targetCount);
+		//console.log('Ammo: ' + Level.ammoLeft + '/' + Level.ammoCount);
+		//console.log('Targets Left: ' + Level.targetCount);
 		
 		Status.setStatus();
 

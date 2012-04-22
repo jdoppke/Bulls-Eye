@@ -1,9 +1,26 @@
-var Level_one = {
+var Level = {
 
-	ammoCount: 8,
-	targetCount: 4,
+	ammoCount: 0,
+	ammoLeft: 0,
+	targetCount: 0,
+	shotsFired: 0,
+
+    load: function(on) {
+
+        Level[on].init();
+        Status.init();
+    
+    }
+
+};
+
+Level['one'] = {
 
     init: function() {
+
+		Level.ammoCount   = 8;
+		Level.ammoLeft    = 8;
+		Level.targetCount = 4;
     
         var bottle = new Target('bottle1');
         bottle.create({
@@ -49,39 +66,6 @@ var Level_one = {
             imageSrc: 'images/target_bottle.png'
         });
 
-    }
-
-};
-
-var Level = {
-
-	ammoCount: 0,
-	ammoLeft: 0,
-	targetCount: 0,
-	shotsFired: 0,
-
-    load: function(level) {
-
-		for (var key in TS.targetLocal) {
-				
-			console.log('sdfs' + key);
-			// Stop animation, delete ref and actual obj
-			var target = TS.targetLocal[key];
-			
-			console.log(target.af);
-			cancelRequestAnimFrame(target.af);
-			TS.stage.removeChild($(target.referenceCopy.id));
-        	delete TS.targetLocal[target.name];
-			
-		}
-		TS.targetLocal = {};
-
-    	Level.ammoCount   = 8;
-    	Level.ammoLeft    = 8;
-    	Level.targetCount = 4;
-        Level_one.init();
-        Status.init();
-    
     }
 
 };

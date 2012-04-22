@@ -3,6 +3,9 @@ var Target = function(name) {
     var self = this;
     self.name = name;
 
+	self.hit = false;
+	self.animCount = 0;
+
     self.posx;
     self.posy;
     self.width;
@@ -12,8 +15,6 @@ var Target = function(name) {
     self.borderRight;
     self.borderTop;
     self.borderBottom;
-    
-    self.animateCycle = 0;
 
     self.tiles = [];
 
@@ -143,41 +144,14 @@ var Target = function(name) {
 
     self.destroy = function(x, y) {
 
-		self.sound.play();
+		//self.sound.play();
         self.makeCopy();
-		self.animate();
+		
+		self.hit = true;
 
+		// Remove target from actual 
         TS.context.clearRect(self.posx, self.posy, self.width, self.height);
 
-    };
-
-    self.animate = function() {
-
-        self.copyContext.clearRect(0,0,800, 450);
-
-        for (var i=0; i<self.tiles.length; i++) {
-            var tile = self.tiles[i];
-            tile.render(self.copyContext, self.referenceCopy);
-            tile.update();
-        }
-        
-        if (self.animateCycle < 100) {
-            //console.log('cycle' + self.name);
-            //setTimeout(function(){
-                self.af = requestAnimFrame(self.animate);
-            //}, 30);
-        } else {
-            
-            // Remove reference canvas
-            TS.stage.removeChild($(self.referenceCopy.id));
-            
-            // Delete target
-            delete TS.targetLocal[self.name];
-            
-            // Cancel RAF for this objects animation
-            cancelRequestAnimFrame(self.af);
-        }
-        self.animateCycle++;
     };
 
 };

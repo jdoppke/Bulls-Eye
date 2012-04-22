@@ -4,8 +4,10 @@ var Tile = function() {
     this.velY = randomRange(-30,30);
 
     this.drag = .95;
+    //this.drag = 1.4;
 
-    this.gravity = 2;
+    //this.gravity = 0;
+	this.gravity = 1.9;
 
     this.spin = .1;
     this.rotation = 0;
