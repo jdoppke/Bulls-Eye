@@ -1,4 +1,4 @@
-var Target = function(name) {
+var Target_exploding = function(name) {
 
     var self = this;
     self.name = name;
@@ -37,6 +37,9 @@ var Target = function(name) {
             TS.context.drawImage(img, param.posx, param.posy);
         };
 
+		param.sliceScaleX = param.sliceScaleX || 10;
+		param.sliceScaleY = param.sliceScaleY || 10;
+
         self.posx = param.posx;
         self.posy = param.posy;
         self.width = param.width;
@@ -55,8 +58,8 @@ var Target = function(name) {
         self.tileHeight = param.tileH;
 
         // Assign random numbers for tile slices
-        var sliceW = Math.floor(param.width / 10);
-        var sliceH = Math.floor(param.height / 10);
+        var sliceW = Math.floor(param.width / param.sliceScaleX);
+        var sliceH = Math.floor(param.height / param.sliceScaleY);
         self.sliceRange = [sliceW, sliceH].sort(numeric);
         
         var horzSliceCount = self.width / self.tileWidth;
