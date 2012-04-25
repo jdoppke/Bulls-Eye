@@ -29,12 +29,12 @@ var TS = {
         var clicky = e.pageY - TS.offsetY;
         var key;
 
-		console.log('e.pageX = ' + e.pageX + ' e.pageY = ' + e.pageY);
-		console.log('TS.offsetX = ' + TS.offsetX + ' TS.offsetY = ' + TS.offsetY);
-		console.log('fired at: ' + clickx + ', ' + clicky);
+        console.log('e.pageX = ' + e.pageX + ' e.pageY = ' + e.pageY);
+        console.log('TS.offsetX = ' + TS.offsetX + ' TS.offsetY = ' + TS.offsetY);
+        console.log('fired at: ' + clickx + ', ' + clicky);
 
-		Level.shotsFired++;
-		Level.ammoLeft--;
+        Level.shotsFired++;
+        Level.ammoLeft--;
 
         for (key in TS.targetLocal) {
 
@@ -53,16 +53,16 @@ var TS = {
 			// If the click was within the target and
 			// if the target wasn't already hit
             if (
-            	clickx > target.borderLeft   &&
+                clickx > target.borderLeft   &&
                 clickx < target.borderRight  &&
                 clicky > target.borderTop    &&
                 clicky < target.borderBottom &&
-            	!target.hit
-            	) {
+                !target.hit
+                ) {
 
                 //console.log('hit');
-                target.destroy(clickx, clicky);
-				Level.targetCount--;
+                target.destroy();
+                Level.targetCount--;
 
             }
         }

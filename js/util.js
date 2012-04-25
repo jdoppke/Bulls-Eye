@@ -6,11 +6,11 @@ var RAD = Math.PI/180;
 var ANIM_LIMIT = 100;
 
 var $ = function(id) {
-	return document.getElementById(id);
+    return document.getElementById(id);
 };
 
 var randomRange = function(min, max) {
-	return ((Math.random()*(max-min)) + min); 
+    return ((Math.random()*(max-min)) + min); 
 };
 
 var numeric = function(a, b) {
@@ -43,39 +43,40 @@ window.cancelRequestAnimFrame = (function() {
 
 var GAMELOOP = function() {
 
-	// Loop through targets to to update if needed.
-	for (var key in TS.targetLocal) {
-	
-		var target = TS.targetLocal[key];
+    // Loop through targets to to update if needed.
+    for (var key in TS.targetLocal) {
 
-		// If the target is hit, update
-		if (target.hit) {
+        var target = TS.targetLocal[key];
 
-			target.copyContext.clearRect(0,0,800, 450);
+        // If the target is hit, update
+        if (target.hit) {
 
-			// Update each tile
-        	for (var i=0; i<target.tiles.length; i++) {
-            	var tile = target.tiles[i];
-            	tile.render(target.copyContext, target.referenceCopy);
-            	tile.update();
-        	}
+            target.copyContext.clearRect(0,0,800, 450);
 
-			if (target.animCount > ANIM_LIMIT) {
-				 // Remove reference canvas
-            	TS.stage.removeChild($(target.referenceCopy.id));
+            // Update each tile
+            for (var i=0; i<target.tiles.length; i++) {
+                var tile = target.tiles[i];
+                tile.update();
+                tile.render(target.copyContext, target.referenceCopy);
+                
+            }
 
-	            // Delete target
-    	        delete TS.targetLocal[target.name];
-			}
+            if (target.animCount > ANIM_LIMIT) {
+                // Remove reference canvas
+                TS.stage.removeChild($(target.referenceCopy.id));
 
-			target.animCount++;
+                // Delete target
+                delete TS.targetLocal[target.name];
+            }
 
-		}
+            target.animCount++;
 
-	}
+        }
 
-	//setTimeout(function(){
-		requestAnimFrame(GAMELOOP);
-	//}, 10);
+    }
+
+    setTimeout(function(){
+        requestAnimFrame(GAMELOOP);
+    }, 10);
 
 };

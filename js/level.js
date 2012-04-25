@@ -66,17 +66,17 @@ Level['one'] = {
             imageSrc: 'images/target_bottle.png'
         });
         
-        var orange = new Target_exploding('orange1');
-        orange.create({
-        	posx: 100,
-        	posy: 400,
-        	width: 22,
-        	height: 23,
-        	tileW: 4,
-        	tileH: 4,
-        	sliceScaleX: 4,
-        	sliceScaleY: 4,
-        	imageSrc: 'images/target_orange.png'
+
+        var jar = new Target_exploding('jar1');
+        jar.create({
+            posx: 600,
+            posy: 300,
+            width: 20,
+            height: 38,
+            tileW: 3,
+            tileH: 3,
+            imageSrc: 'images/target_jar.png',
+            leftOverImageSrc: 'images/target_jar_leftover1.png'
         });
 
     }

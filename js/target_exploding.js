@@ -3,8 +3,8 @@ var Target_exploding = function(name) {
     var self = this;
     self.name = name;
 
-	self.hit = false;
-	self.animCount = 0;
+    self.hit = false;
+    self.animCount = 0;
 
     self.posx;
     self.posy;
@@ -20,16 +20,17 @@ var Target_exploding = function(name) {
 
     self.create = function(param) {
 
-		var sounds = [
+        var sounds = [
             'sounds/glass_breaking_2.mp3',
-			'sounds/glass_breaking_1.mp3'
-		];
-		
-		var randomSound = Math.round(randomRange(0,1));
+            'sounds/glass_breaking_1.mp3'
+        ];
 
-		self.sound = new Audio(sounds[randomSound]);
-		self.sound.load();
+        var randomSound = Math.round(randomRange(0,1));
 
+        self.sound = new Audio(sounds[randomSound]);
+        self.sound.load();
+
+        // Load target image
         var img = new Image();
         self.img = img;
         img.src = param.imageSrc;
@@ -37,8 +38,14 @@ var Target_exploding = function(name) {
             TS.context.drawImage(img, param.posx, param.posy);
         };
 
-		param.sliceScaleX = param.sliceScaleX || 10;
-		param.sliceScaleY = param.sliceScaleY || 10;
+        if (param.leftOverImageSrc) {
+            var leftOverImg = new Image();
+            self.leftOverImg = leftOverImg;
+            leftOverImg.src = param.leftOverImageSrc;
+        }
+
+        param.sliceScaleX = param.sliceScaleX || 10;
+        param.sliceScaleY = param.sliceScaleY || 10;
 
         self.posx = param.posx;
         self.posy = param.posy;
@@ -50,9 +57,7 @@ var Target_exploding = function(name) {
         self.borderTop = param.posy;
         self.borderBottom = param.posy + param.height;
 
-		console.log(TS.targetLocal);
         TS.targetLocal[self.name] = self;
-        //console.log(self);
 
         self.tileWidth = param.tileW;
         self.tileHeight = param.tileH;
@@ -128,7 +133,7 @@ var Target_exploding = function(name) {
                 tile.height
             );
 
-            // need to optimize this...
+            // need to optimize this.
             self.refContext.drawImage(
                 TS.canvas,
                 tile.posx,
@@ -145,15 +150,21 @@ var Target_exploding = function(name) {
 
     };
 
-    self.destroy = function(x, y) {
+    self.destroy = function() {
 
-		//self.sound.play();
+        self.sound.play();
         self.makeCopy();
-		
-		self.hit = true;
 
-		// Remove target from actual 
-        TS.context.clearRect(self.posx, self.posy, self.width, self.height);
+        // If a leftover image exists, clear and draw that one
+        if (self.leftOverImg) {
+            TS.context.clearRect(self.posx, self.posy, self.width, self.height);
+            TS.context.drawImage(self.leftOverImg, self.posx, self.posy);
+        } else {
+            // Remove target from actual 
+            TS.context.clearRect(self.posx, self.posy, self.width, self.height);
+        }
+
+        self.hit = true;
 
     };
 
