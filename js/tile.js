@@ -8,6 +8,9 @@ var Tile = function() {
 
     //this.gravity = 0;
 	this.gravity = 1.9;
+	this.gravity = 1;
+
+	this.gravity = randomRange(1,2);
 
     this.spin = .1;
     this.rotation = 0;

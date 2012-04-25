@@ -74,6 +74,8 @@ var GAMELOOP = function() {
 
 	}
 
-	requestAnimFrame(GAMELOOP);
+	//setTimeout(function(){
+		requestAnimFrame(GAMELOOP);
+	//}, 10);
 
 };
