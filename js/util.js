@@ -41,42 +41,72 @@ window.cancelRequestAnimFrame = (function() {
     );
 })();
 
-var GAMELOOP = function() {
+var GAMELOOP = {
 
-    // Loop through targets to to update if needed.
-    for (var key in TS.targetLocal) {
+	loop: null,
 
-        var target = TS.targetLocal[key];
+	animationLoop: function() {
 
-        // If the target is hit, update
-        if (target.hit) {
+    	console.log('game looping');
+    
+		// Loop through targets to to update if needed.
+    	for (var key in TS.targetLocal) {
 
-            target.copyContext.clearRect(0,0,800, 450);
+	        var target = TS.targetLocal[key];
 
-            // Update each tile
-            for (var i=0; i<target.tiles.length; i++) {
-                var tile = target.tiles[i];
-                tile.update();
-                tile.render(target.copyContext, target.referenceCopy);
+        	// If the target is hit, update
+    	    if (target.hit) {
+
+	            target.copyContext.clearRect(0,0,800, 450);
+
+            	// Update each tile
+            	for (var i=0; i<target.tiles.length; i++) {
+                	var tile = target.tiles[i];
+                	tile.update();
+                	tile.render(target.copyContext, target.referenceCopy);
                 
-            }
+            	}
 
-            if (target.animCount > ANIM_LIMIT) {
-                // Remove reference canvas
-                TS.stage.removeChild($(target.referenceCopy.id));
+            	if (target.animCount > ANIM_LIMIT) {
+                	// Remove reference canvas
+                	TS.stage.removeChild($(target.referenceCopy.id));
 
-                // Delete target
-                delete TS.targetLocal[target.name];
-            }
+                	// Delete target
+                	delete TS.targetLocal[target.name];
+                
+            	}
 
-            target.animCount++;
+        	    target.animCount++;
 
-        }
+    	    }
+    	}
 
-    }
+		requestId = requestAnimFrame(GAMELOOP.animationLoop);
+    
+    	if (Player.levelOver) {
+    		// Wait for any more animations to finish, then
+    		// call stop()
+    		setTimeout(function(){GAMELOOP.stop();}, 1000);
+    	}
+	},
 
-    setTimeout(function(){
-        requestAnimFrame(GAMELOOP);
-    }, 10);
+	start: function() {
+		// If already started just return
+		if (Player.gameOn) {return;}
+		GAMELOOP.animationLoop();
+	},
+
+	stop: function() {
+		console.log('stop called');
+		Player.gameOn = false;
+		cancelRequestAnimFrame(requestId);
+	}
+
+};
+
+var Player = {
+
+	gameOn   : false,
+	levelOver: false
 
 };

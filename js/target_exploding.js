@@ -62,7 +62,7 @@ var Target_exploding = function(name) {
         self.tileWidth = param.tileW;
         self.tileHeight = param.tileH;
 
-        // Assign random numbers for tile slices
+        // Assign numbers for tile slices
         var sliceW = Math.floor(param.width / param.sliceScaleX);
         var sliceH = Math.floor(param.height / param.sliceScaleY);
         self.sliceRange = [sliceW, sliceH].sort(numeric);
@@ -106,8 +106,10 @@ var Target_exploding = function(name) {
                 tile.posy = self.posy + (counter_y * self.tileHeight);
                 tile.originalx = tile.posx;
                 tile.originaly = tile.posy;
-                tile.width = Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
-                tile.height = Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
+                // Need to fix this, want to have random width and height of 
+                // tiles.
+                tile.width = 5;//Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
+                tile.height = 5;//Math.floor(randomRange(self.sliceRange[0], self.sliceRange[1]));
                 self.tiles.push(tile);
                 x += self.tileWidth;
                 counter_x++;

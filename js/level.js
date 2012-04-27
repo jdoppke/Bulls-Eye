@@ -20,7 +20,7 @@ Level['one'] = {
 
 		Level.ammoCount   = 8;
 		Level.ammoLeft    = 8;
-		Level.targetCount = 4;
+		Level.targetCount = 5;
     
         var bottle = new Target_exploding('bottle1');
         bottle.create({
@@ -73,7 +73,7 @@ Level['one'] = {
             posy: 300,
             width: 20,
             height: 38,
-            tileW: 3,
+            tileW: 1,
             tileH: 3,
             imageSrc: 'images/target_jar.png',
             leftOverImageSrc: 'images/target_jar_leftover1.png'

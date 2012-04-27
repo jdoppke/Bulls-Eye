@@ -8,8 +8,8 @@ var TS = {
 
     init: function() {
 
-        TS.stage = document.getElementById('stage');
-        TS.canvas = document.getElementById('canvas');
+        TS.stage = $('stage');
+        TS.canvas = $('canvas');
         TS.context = TS.canvas.getContext('2d');
 
         TS.offsetX = TS.stage.offsetLeft;
@@ -18,12 +18,20 @@ var TS = {
         TS.stage.addEventListener('click', TS.fireShot, false);
 
         Level.load('one');
-        
-        GAMELOOP();
+
+		var start = $('startLevel');
+		start.addEventListener('click', function(e) {
+			
+			GAMELOOP.start();
+			Player.gameOn = true;
+		}, false);
 
     },
 
     fireShot: function(e) {
+
+		// If the game hasn't started, fire nothing
+		if (!Player.gameOn) { return; }
 
         var clickx = e.pageX - TS.offsetX;
         var clicky = e.pageY - TS.offsetY;
@@ -70,6 +78,7 @@ var TS = {
 		if (Level.targetCount === 0) {
 			console.log('Great job, you win!');
 			// Go to next level
+			Player.levelOver = true;
 			Status.setStatus();
 			return;
 		}
@@ -77,6 +86,7 @@ var TS = {
 		if (Level.ammoLeft === 0 && Level.targetCount > 0) {
 			console.log('Sorry, you lost');
 			// Reset level call here
+			Player.levelOver = true;
 		}
 
 		//console.log('Ammo: ' + Level.ammoLeft + '/' + Level.ammoCount);
