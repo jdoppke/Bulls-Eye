@@ -77,8 +77,14 @@ var Target_exploding = function(name) {
         self.canvasCopy.className = 'effects';
         self.canvasCopy.width = 800;
         self.canvasCopy.height = 450;
-        TS.stage.appendChild(self.canvasCopy);
-        self.copyContext = document.getElementById(self.name).getContext('2d');
+
+        // Insert copy canvas after all othe canvas
+        var allCanvas = TS.stage.getElementsByTagName('canvas');
+        var lastCanvas = allCanvas[allCanvas.length - 1];
+        var nextElem = lastCanvas.nextSibling;
+        TS.stage.insertBefore(self.canvasCopy, nextElem);
+
+        self.copyContext = $(self.name).getContext('2d');
 
         // Keep reference copy for later
         self.referenceCopy = document.createElement('canvas');
@@ -87,8 +93,14 @@ var Target_exploding = function(name) {
         self.referenceCopy.width = 800;
         self.referenceCopy.height = 450;
         self.referenceCopy.style.top = '450px';
-        TS.stage.appendChild(self.referenceCopy);
-        self.refContext = document.getElementById(self.name + '_ref').getContext('2d');
+
+        // Insert ref canvas after all other canvas
+        var allCanvas  = TS.stage.getElementsByTagName('canvas');
+        var lastCanvas = allCanvas[allCanvas.length - 1];
+        var nextElem   = lastCanvas.nextSibling;
+        TS.stage.insertBefore(self.referenceCopy, nextElem);
+
+        self.refContext = $(self.name + '_ref').getContext('2d');
 
         self.createTiles();
 
@@ -162,7 +174,7 @@ var Target_exploding = function(name) {
             TS.context.clearRect(self.posx, self.posy, self.width, self.height);
             TS.context.drawImage(self.leftOverImg, self.posx, self.posy);
         } else {
-            // Remove target from actual 
+            // Otherwise just clear target 
             TS.context.clearRect(self.posx, self.posy, self.width, self.height);
         }
 

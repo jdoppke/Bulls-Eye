@@ -18,6 +18,12 @@ Level['one'] = {
 
     init: function() {
 
+        // Check and remove all unwanted canvas elements
+        var unwanted = document.querySelectorAll('.effects, .reference');
+        for (var i=0; i<unwanted.length; i++) {
+            TS.stage.removeChild(unwanted[i]);
+        }
+
 		Level.ammoCount   = 8;
 		Level.ammoLeft    = 8;
 		Level.targetCount = 5;

@@ -18,14 +18,29 @@
 <body>
 
     <div id="stage">
+
+        <!-- Where the magic happens -->
         <canvas id="canvas" width="800" height="450"></canvas>
+
+        <!-- in game UI -->
         <div id="statusBar">
             <span id="ammo"></span>
             <span id="targetsLeft"></span>
         </div>
-    </div>
+        <!-- end in game UI -->
 
-	<a id="startLevel">Start</a>
+        <div id="overlay" class="show"></div>
+
+        <!-- menu UI -->
+        <div id="start" class="menu-ui prep show">
+            <a id="startLevel">Start Game</a>
+        </div>
+        <div id="end" class="menu-ui">
+            <a id="reset">Try again!</a>
+        </div>
+        <!-- end menu UI -->
+
+    </div>
 
     <script type="text/javascript">
         TS.init();

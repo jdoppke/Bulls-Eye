@@ -44,6 +44,7 @@ window.cancelRequestAnimFrame = (function() {
 var GAMELOOP = {
 
 	loop: null,
+	gameOn: false,
 
 	animationLoop: function() {
 
@@ -83,7 +84,7 @@ var GAMELOOP = {
 
 		requestId = requestAnimFrame(GAMELOOP.animationLoop);
     
-    	if (Player.levelOver) {
+    	if (!GAMELOOP.gameOn) {
     		// Wait for any more animations to finish, then
     		// call stop()
     		setTimeout(function(){GAMELOOP.stop();}, 1000);
@@ -92,13 +93,14 @@ var GAMELOOP = {
 
 	start: function() {
 		// If already started just return
-		if (Player.gameOn) {return;}
+		if (GAMELOOP.gameOn) {return;}
+		GAMELOOP.gameOn = true;
 		GAMELOOP.animationLoop();
 	},
 
 	stop: function() {
 		console.log('stop called');
-		Player.gameOn = false;
+		GAMELOOP.gameOn = false;
 		cancelRequestAnimFrame(requestId);
 	}
 
@@ -108,5 +110,26 @@ var Player = {
 
 	gameOn   : false,
 	levelOver: false
+
+};
+
+var UI = {
+
+	closeModal: function(id) {
+
+		$('overlay').className = '';
+		$(id).className = 'menu-ui';
+
+	},
+	
+	showModal: function(id, message) {
+	
+		$('overlay').className = 'show';
+
+		var modal = $(id);
+		//modal.innerHTML = '<p>' + message + '</p>';
+		modal.className = 'menu-ui prep show';
+	
+	}
 
 };
