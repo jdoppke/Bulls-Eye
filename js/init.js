@@ -19,12 +19,12 @@ var TS = {
 
         Level.load('one');
 
-		var start = $('startLevel');
-		start.addEventListener('click', function(e) {
-			e.stopPropagation();
-			UI.closeModal('start');
-			GAMELOOP.start();
-		}, false);
+        var start = $('startLevel');
+        start.addEventListener('click', function(e) {
+            e.stopPropagation();
+            UI.closeModal('start');
+            GAMELOOP.start();
+        }, false);
 
 		$('reset').addEventListener('click', function(e) {
 			e.stopPropagation();
@@ -86,21 +86,21 @@ var TS = {
             }
         }
 
-		if (Level.targetCount === 0) {
-			Status.setStatus();
-			UI.showModal('end', 'winner!');
-			console.log('Great job, you win!');
-			// Go to next level
-			GAMELOOP.gameOn = false;
-			return;
-		}
-		
+        if (Level.targetCount === 0) {
+            GAMELOOP.gameOn = false;
+            Status.setStatus();
+            UI.showModal('end', 'winner!');
+            console.log('Great job, you win!');
+            // Go to next level
+            return;
+        }
+
 		if (Level.ammoLeft === 0 && Level.targetCount > 0) {
 			console.log('Sorry, you lost');
 			UI.showModal('end', 'loser');
 			// Reset level call here
 			GAMELOOP.gameOn = false;
-			
+			return;
 		}
 
 		//console.log('Ammo: ' + Level.ammoLeft + '/' + Level.ammoCount);
