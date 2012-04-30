@@ -45,11 +45,12 @@ var GAMELOOP = {
 
 	loop: null,
 	gameOn: false,
+	timer: null,
 
 	animationLoop: function() {
 
     	console.log('game looping');
-    
+
 		// Loop through targets to to update if needed.
     	for (var key in TS.targetLocal) {
 
@@ -85,20 +86,31 @@ var GAMELOOP = {
 		requestId = requestAnimFrame(GAMELOOP.animationLoop);
     
     	if (!GAMELOOP.gameOn) {
+    		if (GAMELOOP.cancel) {
+    			GAMELOOP.playerTime = ((GAMELOOP.timer - new Date())/1000).toFixed(2) * -1;
+    			$('timer').innerHTML = GAMELOOP.playerTime;
+    		}
     		// Wait for any more animations to finish, then
     		// call stop()
-    		setTimeout(function(){GAMELOOP.stop();}, 1000);
+    		GAMELOOP.stop();
+    		//GAMELOOP.cancel = setTimeout(function(){GAMELOOP.stop();}, 1000);
+    	} else {
+    		$('timer').innerHTML = ((GAMELOOP.timer - new Date())/1000).toFixed(2) * -1;
     	}
 	},
 
 	start: function() {
 		// If already started just return
 		if (GAMELOOP.gameOn) {return;}
+		
+		GAMELOOP.cancel = null;
 		GAMELOOP.gameOn = true;
 		GAMELOOP.animationLoop();
+		GAMELOOP.timer = new Date();
 	},
 
 	stop: function() {
+		console.log((GAMELOOP.playerTime/1000).toFixed(2) * -1);
 		console.log('stop called');
 		GAMELOOP.gameOn = false;
 		cancelRequestAnimFrame(requestId);

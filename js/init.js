@@ -91,7 +91,7 @@ var TS = {
 			UI.showModal('end', 'winner!');
 			console.log('Great job, you win!');
 			// Go to next level
-			Player.levelOver = true;
+			GAMELOOP.gameOn = false;
 			return;
 		}
 		
@@ -99,7 +99,7 @@ var TS = {
 			console.log('Sorry, you lost');
 			UI.showModal('end', 'loser');
 			// Reset level call here
-			Player.levelOver = true;
+			GAMELOOP.gameOn = false;
 			
 		}
 
