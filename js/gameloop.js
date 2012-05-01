@@ -62,6 +62,11 @@ var GAMELOOP = {
 
         if (GAMELOOP.stopIt) {
             GAMELOOP.stop();
+            // Check for outcome, just in case just pause
+            // gets implemented.
+            if (GAMELOOP.outcome) {
+                UI.showModal(GAMELOOP.outcome);
+            }
         }
 
     },

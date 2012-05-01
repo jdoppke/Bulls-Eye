@@ -57,14 +57,24 @@ var UI = {
 
 	},
 	
-	showModal: function(id, message) {
+	showModal: function(id) {
 	
 		$('overlay').className = 'show';
 
 		var modal = $(id);
-		//modal.innerHTML = '<p>' + message + '</p>';
+		var p = modal.querySelectorAll('p')[0];
+		p.innerHTML = UI.getContent(id);
 		modal.className = 'menu-ui prep show';
 	
+	},
+	
+	getContent: function(outcome) {
+        if (outcome === 'loss') {
+            return 'loser, try again';
+        }
+        if (outcome === 'win') {
+            return 'you win' + ' your time: ' + GAMELOOP.playerTime + ' sec';
+        }
 	}
 
 };

@@ -26,10 +26,16 @@ var TS = {
             GAMELOOP.start();
         }, false);
 
-		$('reset').addEventListener('click', function(e) {
+		$('reset1').addEventListener('click', function(e) {
 			e.stopPropagation();
-			//alert('reset');
-			UI.closeModal('end');
+			UI.closeModal('loss');
+			Level.load('one');
+			GAMELOOP.start();
+		}, false);
+
+		$('reset2').addEventListener('click', function(e) {
+			e.stopPropagation();
+			UI.closeModal('win');
 			Level.load('one');
 			GAMELOOP.start();
 		}, false);
@@ -59,7 +65,7 @@ var TS = {
 
             var target = TS.targetLocal[key];
 
-			/*
+            /*
             var str = '';
             str += 'left: ' + target.borderLeft;
             str += ' right: ' + target.borderRight;
@@ -88,18 +94,22 @@ var TS = {
 
         if (Level.targetCount === 0) {
             GAMELOOP.gameOn = false;
+            GAMELOOP.outcome = 'win';
             Status.setStatus();
-            UI.showModal('end', 'winner!');
-            console.log('Great job, you win!');
+            //UI.showModal('end', 'winner!');
+            //console.log('Great job, you win!');
             // Go to next level
             return;
         }
 
 		if (Level.ammoLeft === 0 && Level.targetCount > 0) {
-			console.log('Sorry, you lost');
-			UI.showModal('end', 'loser');
+			//console.log('Sorry, you lost');
+			//UI.showModal('end', 'loser');
 			// Reset level call here
 			GAMELOOP.gameOn = false;
+			GAMELOOP.stopIt = true;
+			GAMELOOP.outcome = 'loss';
+			Status.setStatus();
 			return;
 		}
 

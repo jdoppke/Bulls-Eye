@@ -28,7 +28,7 @@ Level['one'] = {
 		Level.ammoLeft    = 8;
 		Level.targetCount = Level.targetEffectCount = 5;
 
-        TS.stage.style.backgroundImage = 'url(images/bg1.jpg)';
+        //TS.stage.style.backgroundImage = 'url(images/bg1.jpg)';
 
         var bottle = new Target_exploding('bottle1');
         bottle.create({
